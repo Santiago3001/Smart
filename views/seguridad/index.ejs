@@ -1,0 +1,179 @@
+<% layout('../partials/layout') -%>
+<% block('title', 'Inicio'); -%>
+<%- partial('../seguridad/nav.ejs') %>
+
+<div class="container" id="indexSeg">
+    <div class="mt-3 encabezado">
+        <div class="d-flex encPrincipal">
+            <div>
+                <h1 class="display-4">¡Bienvenido a <%= establecimiento[0].nombre  %>!</h1>
+                <p>Servicio de control de aforo y trazabilidad de visitantes de Smart Traz</p>
+            </div>
+            <div class="m-2">
+                <!-- Modal Nuevo visitante-->
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalnuevo">Nuevo visitante</button>
+              <div class="modal fade" id="modalnuevo" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                              <h5 class="modal-title" id="staticBackdropLabel">Registrar un nuevo visitante</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                        <form action="/visitante/regVisitante" method="POST">
+                          <div class="modal-body">
+                              
+                              <div class="form-group">
+                                  <label for="nombres">Nombre/s</label>
+                                  <input type="text"   class="form-control" id="nombres" name="nombres" placeholder="Nombre/s">
+                              </div>
+                              <div class="form-group">
+                                  <label for="apellidos">Apellido/s</label>
+                                  <input type="text" class="form-control" id="apellidos" name="apellidos" placeholder="Apellido/s">
+                              </div>
+                              <div class="form-group">
+                                  <label for="email">Email</label>
+                                  <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+                              </div>
+                              <div class="form-group">
+                                  <label for="dni">DNI</label>
+                                  <input type="number" class="form-control" id="dni" name="dni" placeholder="DNI">
+                              </div>
+                              <div class="form-group">
+                                  <label for="telefono">Celular</label>
+                                  <input type="number" class="form-control" id="telefono" name="telefono" placeholder="Celular">
+                              </div>
+                              <div class="form-group">
+                                <label for="temperatura">Temperatura</label>
+                                <input type="number" class="form-control" id="temperatura" name="temperatura" placeholder="Temperatura">
+                              </div>                   
+                          </div>
+                          <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                              <button type="submit" class="btn btn-primary">Guardar</button>
+                          </div>
+                        </form>
+                      </div>
+                  </div>
+              </div>
+              <!-- fin Modal Nuevo visitante-->
+                <!-- Modal alta caso positivo-->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalalta">Registrar alta</button>
+                <div class="modal fade" id="modalalta" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="staticBackdropLabel">Registrar alta de un caso positivo</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                          <form action="/visitante/regAsist" method="POST">
+                            <div class="modal-body"> 
+                                <div class="form-group">
+                                    <label for="dni">DNI</label>
+                                    <input type="number" class="form-control" id="dni" name="dni" placeholder="DNI">
+                                </div>
+                                <div class="form-group">
+                                  <label for="temperatura">Temperatura</label>
+                                  <input type="number" min="35.0" max="37.9" step="0.1" class="form-control" id="temperatura" name="temperatura" placeholder="Temperatura">
+                                </div>     
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-primary">Guardar</button>
+                            </div>
+                          </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- fin Modal Nuevo Personal-->
+            </div>
+        </div>
+        <div class="row cantidades">
+            <div class="col-lg-6 col-md-6 col-sm-12 bloqueCant">
+                <div><strong>Capacidad total: </strong><p><%= establecimiento[0].capactot  %></p></div>
+                <div><strong>Aforo permitido: </strong><p><%= establecimiento[0].aforopermitido * 100 %>%</p></div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 bloqueCant">
+              <div><strong>Capacidad permitida: </strong><p><%= establecimiento[0].capactot * establecimiento[0].aforopermitido %></p></div>
+              <div><strong>Ocupación: </strong><p><%= asistencia[0].cantAsist  %></p></div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-lg-6 col-md-12 col-sm-12">
+            <div class="our_solution_category">
+                <div class="solution_cards_box">
+                    <div class="solution_card">
+                        <div class="hover_color_bubble"></div>
+                        <div class="d-flex">
+                            <div class="so_top_icon">
+                                <i class="fas fa-sign-in-alt"></i>
+                            </div>
+                            <div class="solu_title m-2">
+                                <h3>Entrada</h3>
+                            </div>
+                        </div>
+                        <div class="solu_description">
+                            <form action="/visitante/regAsist" method="POST">
+                                <div class="form-group">
+                                  <label for="dni">DNI</label>
+                                  <input type="number" class="form-control" id="dni" name="dni" placeholder="DNI">
+                                </div>
+                                <div class="form-group m-1">
+                                 <label for="temperatura">Temperatura</label>
+                                 <input type="number" class="form-control" id="temperatura" name="temperatura" placeholder="Temperatura">
+                               </div>
+                                </hr>
+                                <div class="form-check">
+                                 <input class="form-check-input" type="radio" name="tipo" id="exampleRadios1" value="v" checked>
+                                 <label class="form-check-label" for="exampleRadios1">
+                                   Visitante
+                                 </label>
+                               </div>
+                               <div class="form-check">
+                                 <input class="form-check-input" type="radio" name="tipo" id="exampleRadios2" value="p">
+                                 <label class="form-check-label" for="exampleRadios2">
+                                   Personal
+                                 </label>
+                               </div>
+                                <div class="text-center">
+                                    <button type="submit" class="w-100 btn btn-primary">Registrar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!--  -->           
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-12 col-sm-12">
+            <div class="our_solution_category">
+                <div class="solution_cards_box">
+                    <div class="solution_card solution_salida">
+                        <div class="hover_color_bubble"></div>
+                        <div class="d-flex">
+                            <div class="solu_title m-2">
+                                <h3>Salida</h3>
+                            </div>
+                            <div class="so_top_icon">
+                                <i class="fas fa-sign-out-alt"></i>
+                            </div>
+                        </div>
+                        <div class="solu_description">
+                            <form action="/visitante/regSal" method="POST">
+                                <div class="form-group m-1">
+                                  <label for="dni">DNI</label>
+                                  <input type="number" class="form-control" id="dni" name="dni" placeholder="DNI">
+                                </div>
+                                </hr>
+                                <div class="text-center bot">
+                                    <button type="submit" class="w-100 btn btn-primary">Registrar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!--  -->           
+            </div>
+        </div>
+    </div>
+</div>

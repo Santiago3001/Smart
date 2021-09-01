@@ -1,0 +1,151 @@
+<% layout('../partials/layout') -%>
+<% block('title', 'Reportes Positivos'); -%>
+<%- partial('../administrador/nav.ejs') %>
+<div class="container">
+  <div class="my-4 d-flex justify-content-between">
+    <h1>Reportes de casos positivos</h1>
+        <!-- Modal Nuevo Personal-->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalnuevo">Registrar caso positivo</button>
+    <div class="modal fade" id="modalnuevo" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="staticBackdropLabel">Registrar caso positivo</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form action="/reportes/reporte" method="POST" enctype="multipart/form-data">
+                  <div class="row">
+                        <div class="">
+                          <div class="form-group mt-3">
+                            <label for="dni">DNI:</label>
+                            <input type="number" value="" class="form-control" id="dni" name="dni" placeholder="DNI">
+                          </div>
+                          <div class="form-group mt-3">
+                            <label for="nombres">Nombre:</label>
+                            <input type="text" value=""  class="form-control" id="nombres" name="nombres" placeholder="Nombre">
+                          </div>
+                          <div class="form-group mt-3">
+                            <label for="apellidos">Apellido:</label>
+                            <input type="text" value=""  class="form-control" id="apellidos" name="apellidos" placeholder="Apellidos">
+                          </div>
+                          <div class="form-group mt-3">
+                              <label for="fechaTestPositivo">Fecha del Test Positivo:</label>
+                              <input type="date" class="form-control" id="fechaTestPositivo" name="fechaTestPositivo" placeholder="Fecha del Test Positivo">
+                          </div>
+                          <div class="form-group mt-3">
+                              <label for="archivoTest">Archivo del Test Positivo</label>
+                              <input type="file" class="form-control" id="archivoTest" name="archivoTest">
+                          </div>
+                          <!-- <div class="form-group mt-3">
+                            <label for="archivoAlta">Archivo del Alta</label>
+                            <input type="file" class="form-control" id="archivoAlta" name="archivoAlta">
+                          </div> -->
+                        </div>
+                  </div>
+                  </br>
+                  <div class="text-center">
+                      <button type="submit" class="btn btn-primary">Enviar reporte</button>
+                  </div>
+              </form>
+              </div>
+            </div>
+      </div>
+  </div>
+  <!-- fin Modal Nuevo Personal-->
+  </div>
+  <section id="admAdministradores">
+    <div class="listaPersonal my-5">
+      <div class="inner-addon left-addon">
+        <i class="fas fa-search glyphicon border-end iconoPriCol"></i>
+        <input type="text" id="buscarReporte" onkeyup="filtrar('buscarReporte','tablaReporte')" placeholder="Buscar por Apellido, Nombre o DNI">
+      </div>
+      <table id="tablaReporte" class="table align-middle">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">DNI</th>
+            <th scope="col">Nombre/s</th>
+            <th scope="col">Apellido/s</th>
+            <th scope="col">Fecha de test positivo</th>
+            <th scope="col">Documento</th>
+            <th scope="col">-</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!--Acá va el FOR-->
+          <% for( let repo = 0; repo < reporte.length; repo++ ) { %>
+          <tr>
+            <th scope="row"><%=repo+1 %></th>
+            <td><%=reporte[repo].dni %></td>
+            <td><%=reporte[repo].nombres %></td>
+            <td><%=reporte[repo].apellidos %></td>
+            <td><%=reporte[repo].fechTestPositivo %></td>
+            <td>
+              <a download="reporte test positivo"  href="/sendMePDF">Click para descargar reporte en pdf</a>
+            </td>
+            <td>
+              <button type="button" class="btn btn-success btn-sm px-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                Verificar
+              </button>
+              <!-- Modal-->
+                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h6 class="modal-title" id="staticBackdropLabel">Verificar reporte</h6>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <form action="/reportes/validar" method="POST">                              
+                          <div class="form-group">
+                            <div class="">
+                              <div class="d-flex justify-content-center">
+                                <p><%=reporte[repo].nombres %></p>
+                                <p class="ms-2"><%=reporte[repo].apellidos %></p>
+                              </div>   
+                              <div class="d-flex justify-content-evenly mb-3">
+                                <div>
+                                  <label for="dni">DNI</label>
+                                  <input type="number" value="<%=reporte[repo].dni %>" class="form-control" id="dni" name="dni" disabled>
+                                </div>
+                                <div class="text-center">
+                                  <label for="fechaTestPositivo">Fecha del Test Positivo:</label>
+                                  <input type="date" value="<%=reporte[repo].fechTestPositivo %>" class="form-control" id="fechTestPositivo" name="fechTestPositivo" placeholder="Fecha del Test Positivo">
+                                </div>
+                              </div> 
+                            </div>                        
+                            <div class="text-center mb-3">
+                              <object  data="/sendMePDF" style="width: 400px; height: 300px;">
+                              </object>
+                            </div>                        
+                          </div>
+                          <div class="d-flex justify-content-center">
+                            <select type="text" class="form-select w-50" id="estado" name="estado">
+                              <option value="">¿Es un reporte válido?</option>
+                              <option value="0">No válido</option>
+                              <option value="1">Es válido</option>
+                            </select>
+                          </div>
+                          <small>Si valida el reporte, comenzará el proceso de trazabilidad de personas, y el visitante quedará deshabilitado para ingresar al local.</small>
+                      
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-success">Confirmar</button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+                    <!-- Fin Modal-->
+            </td>
+          </tr> 
+          <% } %>
+         <!--Acá TERMINA el FOR-->             
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>

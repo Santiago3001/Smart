@@ -1,0 +1,172 @@
+<% layout('partials/layout') -%>
+<% block('title', 'Inicio'); -%>
+
+<nav class="navbar sticky-top navbar-expand-lg">
+
+  <!-- logo -->
+  <a href="/administrador/index"><img id="logo1" src="/LogoBlaDer.png" alt="LogoBlaDer"></a>
+  <a href="/administrador/index"><img id="logo2" src="/LogoBla.png" alt="LogoBla"></a>
+
+  <a
+    class="navbar-btn btn btn-primary btn-md"
+    href="/"
+    role="button"
+    id="loginButton2"
+    >Cerrar Sesión</a
+  >
+  <a
+    class="navbar-btn btn btn-primary btn-md"
+    href="/"
+    role="button"
+    id="loginButton1"
+    >Cerrar Sesión</a
+  >
+  
+</nav>
+
+<div class="container-fluid">
+  <div class="row">
+    <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-dark sidebar collapse">
+      <div class="position-sticky pt-3">
+        <ul class="nav flex-column list-unstyled ps-0">
+          <li class="nav-item">
+            <a class="nav-link"  style="cursor:pointer" onClick="Alternar(admInicio,admAdministradores,sec3)" href="#">
+              <span data-feather="home" ></span>
+              Inicio
+            </a>
+          </li>
+          <li style="cursor:pointer" onClick="Alternar(admAdministradores,admInicio,sec3)" class="nav-item">
+            <a class="nav-link" href="#">
+              <span data-feather="file"></span>
+              Administradores
+            </a>
+          </li>
+          <li style="cursor:pointer" onClick="Alternar(sec3,admAdministradores,admInicio)" class="nav-item">
+            <a class="nav-link" href="#">
+              <span data-feather="file"></span>
+              Otra Sección
+            </a>
+          </li>
+        </ul>        
+      </div>
+    </nav>
+
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+     
+      <section id="admInicio">
+      <!--tenia la clase justify-content-between y cambié a center-->
+      <div class="d-flex justify-content-center flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <div class="mt-2 d-flex justify-content-center">
+          <img class="iconosIndex" src="../LogoColAba.png" alt="LogoColAba">
+        </div>
+      </div>
+      </section>  
+      <section id="admAdministradores" style="display: none;" >
+        <div class="listaPersonal my-5">
+          <table class="table align-middle">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">ID</th>
+                  <th scope="col">Apellido/s</th>
+                  <th scope="col">Nombre/s</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">DNI</th>
+                  <th scope="col">Celular</th>
+                  <th scope="col">Estado</th>
+                  <th scope="col">Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!--Acá va el FOR-->
+               <% for( let adm = 0; adm < admin.length; adm++ ) { %>
+                <tr>
+                  <th scope="row"><%=adm+1 %></th>
+                  <td><%=admin[adm].idAdmin %></td>
+                  <td><%=admin[adm].apellidos %></td>
+                  <td><%=admin[adm].nombres %></td>
+                  <td><%=admin[adm].email %></td>
+                  <td><%=admin[adm].dni %></td>
+                  <td><%=admin[adm].telefono %></td>
+                      <td>
+                        <% if (admin[adm].estado == '1') { %>
+                          <p>Habilitado</p>
+                          <%} else { %>
+                          <p> Deshabilitado </p>
+                          <% } %>
+                      </td>
+                      <td>
+                          <button type="button" class="btn btn-success btn-sm px-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop<%=admin[adm].idAdmin %>">
+                            Cambiar estado
+                          </button>
+                          <!-- Modal-->
+                          <div class="modal fade" id="staticBackdrop<%=admin[adm].idAdmin %>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                             <div class="modal-content">
+                              <div class="modal-header">
+                                  <h5 class="modal-title" id="staticBackdropLabel">¿Aplicar cambios?</h5>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                                  <form action="/superadministrador/habilAdmin" method="POST">
+                                    <div class="form-group">
+                                        <select type="text" class="form-select" id="estado" name="estado">
+                                          <% if (admin[adm].estado == '1') { %>
+                                            <option selected value="<%=admin[adm].estado %>">
+                                                   <p>Habilitado</p>
+                                            </option>
+                                            <option value="0">Deshabilitado</option>
+                                           <%} else { %>
+                                            <option selected value="<%=admin[adm].estado %>">
+                                                   <p>Desabilitado</p>
+                                            </option>
+                                            <option value="1">Habilitado</option>
+                                           <% } %>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                      <label for="email">Email</label>
+                                      <input type="email" value="<%=admin[adm].email %>" class="form-control" id="email" name="email">
+                                    </div>
+                                    <div class="form-group">
+                                      <label for="dni">DNI</label>
+                                      <input type="number" value="<%=admin[adm].dni %>" class="form-control" id="dni" name="dni">
+                                    </div>
+                                    <div class="form-group">
+                                      <label for="idAdmin">idAdmin</label>
+                                      <input type="text" value="<%=admin[adm].idAdmin %>" class="form-control" id="idAdmin" name="idAdmin">
+                                    </div>
+                                    
+                                        Si confirma la operación se habilitará o se deshabilitará el servicio según la opción elegida.
+                                  </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                        <button type="submit" class="btn btn-success">Confirmar</button>
+                                    </div>
+                                  </form>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <!-- Fin Modal-->
+                      </td>
+                  
+              </tr> 
+             <% } %>
+             <!--Acá TERMINA el FOR-->             
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="sec3" style="display: none;" >
+        Otra sección
+      </section>
+
+    </main>
+  </div>
+</div>
+
+
+<script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script><script src="dashboard.js"></script>

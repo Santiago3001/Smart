@@ -1,0 +1,52 @@
+<% layout('../partials/layout') -%>
+<% block('title', 'Inicio'); -%>
+
+<div class="container my-4">
+    <div class="row">
+      <div class="col-md-6 offset-md-3 text-center">
+          <a href="/"><img id="logoPrincipal" src="/images/LogoColAba.png" alt="LogoColAba"></a>
+      </div>
+      <div class="card col-md-6 offset-md-3">
+          <div class="card-header fw-bold bg-white">
+              <h3 class="text-center fw-regular">Reporte</h3>
+          </div>
+          <div class="card-body">
+              <form action="/reportes/reporte" method="POST" enctype="multipart/form-data">
+                  <div class="row">
+                        <div class="">
+                          <div class="form-group mt-3">
+                            <label for="dni">DNI:</label>
+                            <input type="number" value="<%= visitante[0].dni  %>" class="form-control" id="dni" name="dni" placeholder="DNI" disabled>
+                          </div>
+                          <div class="form-group mt-3">
+                            <label for="nombres">Nombre:</label>
+                            <input type="text" value="<%= visitante[0].nombres  %>"  class="form-control" id="nombres" name="nombres" placeholder="Nombre" disabled>
+                          </div>
+                          <div class="form-group mt-3">
+                            <label for="apellidos">Apellido:</label>
+                            <input type="text" value="<%= visitante[0].apellidos  %>"  class="form-control" id="apellidos" name="apellidos" placeholder="Apellidos" disabled>
+                          </div>
+                          <div class="form-group mt-3">
+                              <label for="fechaTestPositivo">Fecha del Test Positivo:</label>
+                              <input type="date" class="form-control" id="fechaTestPositivo" name="fechaTestPositivo" placeholder="Fecha del Test Positivo">
+                          </div>
+                          <div class="form-group mt-3">
+                              <label for="archivoTest">Archivo del Test Positivo</label>
+                              <input type="file" class="form-control" id="archivoTest" name="archivoTest">
+                          </div>
+                          <!-- <div class="form-group mt-3">
+                            <label for="archivoAlta">Archivo del Alta</label>
+                            <input type="file" class="form-control" id="archivoAlta" name="archivoAlta">
+                          </div> -->
+                        </div>
+                  </div>
+                  </br>
+                  <div class="text-center">
+                      <button type="submit" class="btn btn-primary">Enviar Reporte</button>
+                  </div>
+              </form>
+          </div>
+      </div>   
+    </div>
+  </div>
+  

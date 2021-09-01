@@ -1,0 +1,162 @@
+<% layout('../partials/layout') -%>
+<% block('title', 'Registro'); -%>
+<%- partial('../administrador/nav.ejs')%>
+
+<div class="container" id="est-prot">
+    <div class="title my-4">
+        <h1>Mi establecimiento</h1>
+    </div>
+    <div class="row establecimiento my-5 p-0">
+        <div class="col-lg-8 p-3">
+            <div class="subtitle d-flex justify-content-between border-bottom border-dark">
+                <h3>Datos del establecimiento</h3>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn-edit fw-bold" data-bs-toggle="modal" data-bs-target="#modalEstablec">Editar <i class="far fa-edit"></i></button>
+                <!-- Modal -->
+                <div class="modal fade" id="modalEstablec" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="staticBackdropLabel">Editar datos del establecimiento</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                        <form action="/establecimiento/" method="POST">
+                            <div class="modal-body">
+                                
+                                    <div class="form-group">
+                                        <label for="nombre">Nombre del establecimiento</label>
+                                        <input type="text" value="<%= establecimientos[0].nombre  %>" class="form-control" id="nombre" name="nombre" placeholder="Introduzca nombre del establecimiento">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cuit">CUIT/CUIL</label>
+                                        <input type="number" value="<%= establecimientos[0].cuit  %>" class="form-control" id="cuit" name="cuit" placeholder="CUIT/CUIL">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="direccion">Dirección</label>
+                                        <input type="text" value="<%= establecimientos[0].direccion  %>" class="form-control" id="direccion" name="direccion" placeholder="Dirección">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="localidad">Localidad</label>
+                                        <input type="text" value="<%= establecimientos[0].localidad  %>" class="form-control" id="localidad" name="localidad" placeholder="Localidad" >
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="provincia">Provincia</label>
+                                        <input type="text" value="<%= establecimientos[0].provincia  %>" class="form-control" id="provincia" name="provincia" placeholder="Provincia" >
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="descripcion">Descripción</label>
+                                        <input type="text" value="<%= establecimientos[0].descripcion  %>" class="form-control" id="descripcion" name="descripcion" placeholder="Descripción" >
+                                    </div>                           
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-primary">Guardar</button>
+                            </form>
+                            </div>
+                        </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- fin Modal -->
+            </div>
+            <div class="datos">
+                <div class="d-flex">
+                    <span>Nombre del establecimiento: </span>
+                    <p> <%= establecimientos[0].nombre  %></p>
+                </div>     
+                <div class="d-flex">
+                    <span>CUIT/CUIL: </span>
+                    <p><%= establecimientos[0].cuit  %></p>
+                </div>
+                <div class="d-flex">
+                    <span>Dirección: </span>
+                    <p><%= establecimientos[0].direccion  %></p>
+                </div>
+                <div class="d-flex">
+                    <span>Localidad: </span>
+                    <p><%= establecimientos[0].localidad  %></p>
+                </div>
+                <div class="d-flex">
+                    <span>Provincia: </span>
+                    <p><%= establecimientos[0].provincia  %></p>
+                </div>
+                <div class="d-flex">
+                    <span>Descripción: </span>
+                    <p><%= establecimientos[0].descripcion  %></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 poligono1"></div>
+    </div>
+
+    <div class="row establecimiento my-5 p-0">
+        <div class="col-lg-4 poligono2"></div>
+        <div class="col-lg-8 p-3">
+            <div class="subtitle d-flex justify-content-between border-bottom border-dark">
+                <h3>Protocolo</h3>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn-edit fw-bold" data-bs-toggle="modal" data-bs-target="#modalProtocol">Editar <i class="far fa-edit"></i></button>
+                <!-- Modal -->
+                <div class="modal fade" id="modalProtocol" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="staticBackdropLabel">Editar datos del protocolo</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                        <form action="/establecimiento/parametros" method="POST">    
+                            <div class="modal-body">
+                                
+                                    <div class="form-group">
+                                        <label for="">Capacidad total</label>
+                                        <input type="number" value="<%= establecimientos[0].capactot  %>" class="form-control" id="capactot" name="capactot" placeholder="Capacidad total del establecimiento">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">% aforo permitido</label>
+                                        <input type="number" value="<%= establecimientos[0].aforopermitido  %>" class="form-control" id="aforopermitido" name="aforopermitido" placeholder="Aforo permitido según protocolo">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">Días antes</label>
+                                        <input type="number" value="<%= establecimientos[0].diasantes  %>" class="form-control" id="diasantes" name="diasantes" placeholder="Días antes del reporte" >
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">Días después</label>
+                                        <input type="number" value="<%= establecimientos[0].diasdespues  %>" class="form-control" id="diasdespues" name="diasdespues" placeholder="Días después del reporte" >
+                                    </div>
+                                                               
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-primary">Guardar</button>
+                            </div>
+                        </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- fin Modal -->
+            </div>
+            <div class="datos">
+                <div class="d-flex">
+                    <span>Capacidad total: </span>
+                    <p><%= establecimientos[0].capactot  %> personas</p>
+                </div>     
+                <div class="d-flex">
+                    <span>Aforo permitido: </span>
+                    <p><%= establecimientos[0].aforopermitido * 100  %> %</p>
+                </div>
+                <div class="d-flex">
+                    <span>Capacidad permitida: </span>
+                    <p><%= establecimientos[0].capactot * establecimientos[0].aforopermitido  %> personas</p>
+                </div>
+                <div class="d-flex">
+                    <span>Días antes: </span>
+                    <p><%= establecimientos[0].diasantes  %></p>
+                </div>
+                <div class="d-flex">
+                    <span>Días despúes: </span>
+                    <p><%= establecimientos[0].diasdespues  %></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

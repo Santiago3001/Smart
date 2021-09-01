@@ -1,0 +1,117 @@
+<% layout('../partials/layout') -%>
+<% block('title', 'Inicio'); -%>
+<%- partial('../administrador/nav.ejs') %>
+
+<div class="container">
+  <div class="row">
+    <div class="flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+      <h1 class="display-4">Bienvenido a <%= establecimiento[0].nombre  %></h1>
+      <p class="lead">Servicio de control de aforo y trazabilidad de visitantes de Smart Traz</p>
+      <!-- <p>Gestionando visistas de su local </p> -->
+      <hr class="my-4" />
+    </div>
+    <div class="col-md-4 col-xl-3">
+      <a href="/establecimiento">
+        <div class="cardIndex bg-c-indigo-700 order-card">
+          <div class="card-block">
+            <div class="text-center my-4">
+              <i class="fas fa-store mb-3"></i>
+              <h6 class="m-b-20 fw-bold">Establecimiento/Protocolo</h6>
+            </div>
+            <p class="m-0 text-center">
+              Actualizá los datos de tu establecimiento y del protocolo.
+            </p>
+          </div>
+        </div>
+      </a>
+    </div>
+    <div class="col-md-4 col-xl-3">
+      <a href="/reportes/positivos">
+        <div class="cardIndex bg-c-pink order-card">
+          <div class="card-block">
+            <div class="text-center my-4">
+              <i class="fas fa-clipboard-list mb-3"></i>
+              <h6 class="m-20 fw-bold">Reportes de Casos Positivos</h6>
+            </div>
+            <p class="m-0 text-center">
+              Gestioná los reportes de casos positivos.
+            </p>
+          </div>
+        </div>
+      </a>
+    </div>
+    <div class="col-md-4 col-xl-3">
+      <a href="">
+        <div class="cardIndex bg-c-blue order-card">
+          <div class="card-block">
+            <div class="text-center my-4">
+              <i class="fas fa-clipboard-list mb-3"></i>
+              <h6 class="m-20 fw-bold">Reportes de Altas</h6>
+            </div>
+            <p class="m-0 text-center">
+              Gestioná los reportes de altas.
+            </p>
+          </div>
+        </div>
+      </a>
+    </div>
+    <div class="col-md-4 col-xl-3">
+      <a href="/personal/mostrarPersonal">
+        <div class="cardIndex bg-c-green order-card">
+          <div class="card-block">
+            <div class="text-center my-4">
+              <i class="fas fa-users mb-3"></i>
+              <h6 class="m-b-20 fw-bold">Gestión del Personal</h6>
+            </div>
+            <p class="m-0 text-center">
+              Administrá los datos de tus empleados.
+            </p>
+          </div>
+        </div>
+      </a>
+    </div>
+    <div class="col-md-4 col-xl-3">
+      <a href="">
+        <div class="cardIndex bg-c-purple-400 order-card">
+          <div class="card-block">
+            <div class="text-center my-4">
+              <i class="far fa-list-alt mb-3"></i>
+              <h6 class="m-b-20 fw-bold">Listado de Asistencias</h6>
+            </div>
+            <p class="m-0 text-center">
+              Accedé al listado de asistencia.
+            </p>
+          </div>
+        </div>
+      </a>
+    </div>
+    <div class="col-md-4 col-xl-3">
+      <a href="">
+        <div class="cardIndex bg-c-green-400 order-card">
+          <div class="card-block">
+            <div class="text-center my-4">
+              <i class="far fa-list-alt mb-3"></i>
+              <h6 class="m-b-20 fw-bold">Listados de Contagios Activos</h6>
+            </div>
+            <p class="m-0 text-center">
+              Accedé al listado de contagios activos.
+            </p>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+<script
+  src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"
+  integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE"
+  crossorigin="anonymous"
+></script>
+<script
+  src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"
+  integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha"
+  crossorigin="anonymous"
+></script>
+<script src="dashboard.js"></script>

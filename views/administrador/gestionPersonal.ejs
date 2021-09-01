@@ -1,0 +1,235 @@
+<% layout('../partials/layout') -%>
+<% block('title', 'Gestión de personal'); -%>
+<%- partial('../administrador/nav.ejs')%>
+<div class="container">
+    <div class="title my-4 d-flex justify-content-between">
+        <h1>Gestión del personal</h1>
+        <!-- Modal Nuevo Personal-->
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalnuevo">Nuevo Personal</button>
+        <div class="modal fade" id="modalnuevo" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Registrar un nuevo personal</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                  <form action="/personal/regPersonal" method="POST">
+                    <div class="modal-body">
+                        
+                        <div class="form-group">
+                            <label for="nombres">Nombre/s</label>
+                            <input type="text"   class="form-control" id="nombres" name="nombres" placeholder="Nombre/s">
+                        </div>
+                        <div class="form-group">
+                            <label for="apellidos">Apellido/s</label>
+                            <input type="text" class="form-control" id="apellidos" name="apellidos" placeholder="Apellido/s">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+                        </div>
+                        <div class="form-group">
+                            <label for="dni">DNI</label>
+                            <input type="number" class="form-control" id="dni" name="dni" placeholder="Dni">
+                        </div>
+                        <div class="form-group">
+                            <label for="telefono">Celular</label>
+                            <input type="number" class="form-control" id="telefono" name="telefono" placeholder="Celular">
+                        </div>
+                        <div class="form-group">
+                            <label for="direccion">Dirección</label>
+                            <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Dirección">
+                        </div>
+                        <div class="form-group">
+                            <label for="cargo">Cargo</label>
+                            <select type="text" class="form-select" id="cargo" name="cargo">
+                                <option value="normal">Estándar</option>
+                                <option value="seguridad">Seguridad</option>
+                            </select>
+                        </div>                       
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                  </form>
+                </div>
+            </div>
+        </div>
+        <!-- fin Modal Nuevo Personal-->
+    </div>
+    <div class="listaPersonal my-5">
+        <div class="inner-addon left-addon">
+            <i class="fas fa-search glyphicon border-end iconoPriCol"></i>
+            <input type="text" id="buscarPersonal" onkeyup="filtrar('buscarPersonal','tablaPersonal')" placeholder="Buscar por Apellido, Nombre o DNI">
+        </div>
+        <table id="tablaPersonal" class="table align-middle">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Apellido/s</th>
+                <th scope="col">Nombre/s</th>
+                <th scope="col">DNI</th>
+                <th scope="col">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+         <% for( let pers = 0; pers < personal.length; pers++ ) { %> 
+              <tr>
+                <th scope="row"><%=pers+1 %></th>
+                <td><%=personal[pers].apellidos %></td>
+                <td><%=personal[pers].nombres %></td>
+                <td><%=personal[pers].dni %></td>
+                <td>
+                    <!-- Modal VER -->
+                    <button type="button" class="btn btn-info btn-sm px-3" data-bs-toggle="modal" data-bs-target="#modalVer<%=personal[pers].idPers %>">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                    <div class="modal fade" id="modalVer<%=personal[pers].idPers %>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="staticBackdropLabel">Datos</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                            <form action="/personal/mostrarPersonal" method="GET">
+                                <div class="modal-body">
+
+                                    <div class="form-group">
+                                        <label for="nombres">Nombre/s</label>
+                                        <p><%=personal[pers].nombres %></p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="apellidos">Apellido/s</label>
+                                        <p><%=personal[pers].apellidos %></p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">Email</label>
+                                        <p><%=personal[pers].email %></p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="dni">DNI</label>
+                                        <p><%=personal[pers].dni %></p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="telefono">Celular</label>
+                                        <p><%=personal[pers].telefono %></p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="direccion">Dirección</label>
+                                        <p><%=personal[pers].direccion %></p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cargo">Cargo</label>
+                                        <% if (personal[pers].cargo == 'normal') { %>
+                                            <p>Estándar</p>
+                                        <%} else { %>
+                                            <p>Seguridad</p>
+                                        <% } %>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                    <button type="submit" class="btn btn-success">Guardar</button>
+                                </div>
+                            </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- fin Modal VER -->
+                    <!-- Modal EDITAR -->
+                    <button type="button" class="btn btn-warning btn-sm px-3" data-bs-toggle="modal" data-bs-target="#modalEdit<%=personal[pers].idPers %>">
+                        <i class="fas fa-pencil-alt"></i>
+                    </button>
+                    <div class="modal fade" id="modalEdit<%=personal[pers].idPers %>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="staticBackdropLabel">Editar datos</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                            <form action="" method="POST">
+                                <div class="modal-body">
+
+                                    <div class="form-group">
+                                        <label for="nombres">Nombre/s</label>
+                                        <input type="text" value="<%=personal[pers].nombres %>" class="form-control" id="nombre" name="nombre" placeholder="Nombre/s">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="apellidos">Apellido/s</label>
+                                        <input type="text" value="<%=personal[pers].apellidos %>" class="form-control" id="apellidos" name="apellidos" placeholder="Apellido/s">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">Email</label>
+                                        <input type="email" value="<%=personal[pers].email %>" class="form-control" id="email" name="email" placeholder="Email">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="dni">DNI</label>
+                                        <input type="number" value="<%=personal[pers].dni %>" class="form-control" id="dni" name="dni" placeholder="Dni">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="telefono">Celular</label>
+                                        <input type="number" value="<%=personal[pers].telefono %>" class="form-control" id="telefono" name="telefono" placeholder="Celular">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="direccion">Dirección</label>
+                                        <input type="text" value="<%=personal[pers].direccion %>" class="form-control" id="direccion" name="direccion" placeholder="Dirección">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cargo">Cargo</label>
+                                        <select type="text" class="form-select" id="estado" name="estado">
+                                            <% if (personal[pers].cargo == 'normal') { %>
+                                              <option selected value="<%=personal[pers].cargo %>">
+                                                     <p>Estándar</p>
+                                              </option>
+                                              <option value="seguridad">Seguridad</option>
+                                             <%} else { %>
+                                              <option value="normal">Estándar</option>
+                                              <option selected value="<%=personal[pers].cargo %>">
+                                                     <p>Seguridad</p>
+                                              </option>
+                                             <% } %>
+                                        </select>
+                                    </div>                
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                    <button type="submit" class="btn btn-success">Guardar</button>
+                                </div>
+                            </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- fin Modal EDITAR -->
+                    <button type="button" class="btn btn-danger btn-sm px-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop<%=personal[pers].idPers %>">
+                      <i class="fas fa-times"></i>
+                    </button>
+                    <!-- Modal ELIMINAR-->
+                    <div class="modal fade" id="staticBackdrop<%=personal[pers].idPers %>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel">¿Eliminar este elemento?</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            ¿Estás seguro que desea eliminar esta persona de la lista de empleados?
+                            Esta acción no se puede deshacer.
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-danger">Confirmar</button>
+                        </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Fin Modal ELIMINAR-->
+                </td>
+            </tr> 
+              
+            <% } %>
+            
+            </tbody>
+        </table>
+    </div>
+</div>

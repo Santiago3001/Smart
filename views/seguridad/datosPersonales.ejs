@@ -1,0 +1,77 @@
+<% layout('../partials/layout') -%>
+<% block('title', 'Datos personales'); -%>
+<%- partial('../seguridad/nav.ejs') %>
+
+<div class="container" id="est-prot">
+    <div class="title my-4">
+        <h1>Datos Personales</h1>
+        <!-- Modal Cambiar Contraseña-->
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalnuevo">Cambiar contraseña</button>
+        <div class="modal fade" id="modalnuevo" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Cambiar contraseña</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                  <form action="" method="POST">
+                    <div class="modal-body">
+                        
+                        <div class="form-group">
+                            <label for="contraseñaActual">Contraseña actual</label>
+                            <input type="password"   class="form-control" id="contraseñaActual" name="contraseñaActual" placeholder="Contraseña actual">
+                        </div>
+                        <div class="form-group">
+                            <label for="contraseñaNueva">Contraseña nueva</label>
+                            <input type="contraseñaNueva" class="form-control" id="contraseñaNueva" name="contraseñaNueva" placeholder="Contraseña nueva">
+                        </div>
+                        <div class="form-group">
+                            <label for="repetirContraseña">Repetir contraseña nueva</label>
+                            <input type="repetirContraseña" class="form-control" id="repetirContraseña" name="repetirContraseña" placeholder="Repetir contraseña nueva">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                  </form>
+                </div>
+            </div>
+        </div>
+        <!-- fin Modal Cambiar Contraseña-->
+    </div>
+    <div class="row establecimiento my-5 p-0">
+        <div class="col-lg-8 p-3">
+            <div class="subtitle d-flex justify-content-between border-bottom border-dark">
+                <h3>Mis datos</h3>
+            </div>
+            <div class="datos">
+                <div class="d-flex">
+                    <span>Nombre/s: </span>
+                    <p> </p>
+                </div>     
+                <div class="d-flex">
+                    <span>Apellido/s: </span>
+                    <p></p>
+                </div>
+                <div class="d-flex">
+                    <span>DNI: </span>
+                    <p></p>
+                </div>
+                <div class="d-flex">
+                    <span>Correo electrónico: </span>
+                    <p></p>
+                </div>
+                <div class="d-flex">
+                    <span>Celular: </span>
+                    <p></p>
+                </div>
+                <div class="d-flex">
+                    <span>Dirección: </span>
+                    <p></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 datosPersonales"></div>
+    </div>
+</div>
